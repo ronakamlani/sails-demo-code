@@ -1,0 +1,12 @@
+<% if(err==null){} 
+else{ 
+var msg="";
+for (var x in err.invalidAttributes){
+    for(i=0;i<err.invalidAttributes[x].length;i++)
+        msg=msg+err.invalidAttributes[x][i].message;
+}
+%>
+<font color="#ff0000">
+<h3><%- msg %></h3></font>
+<% } %>
+

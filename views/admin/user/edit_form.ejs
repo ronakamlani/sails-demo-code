@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | General Form Elements</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <% include ../include/head %>
+  <link rel="stylesheet" type="text/css" href="/admin/lib/chosen/chosen.min.css" /> 
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<% include ../include/header %>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        User        
+      </h1>
+      
+    </section>
+
+    <!-- Main content --> 
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Registration Form</h3>
+            </div>
+             <% include ../include/error %>
+                   
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" name="registration" method="post" action="/admin/user/update" enctype="multipart/form-data">
+              <div class="box-body">
+                <div class="form-group">
+                  <label>First Name <span style="color:red;">*</span></label>
+                  <input type="hidden" name="hidden_id" value="<%- users.id%>">
+                  <input type="text" name="firstName" id="firstName" autocomplete="off" placeholder="Enter First Name" value="<%- users.firstName%>" maxlength="50" required="required" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Last Name <span style="color:red;">*</span></label>
+                  <input type="text" name="lastName" id="lastName" autocomplete="off" placeholder="Enter Last Name"  value="<%- users.lastName%>" maxlength="50" required="required" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label>Email <span style="color:red;">*</span></label>
+                  <input type="email" name="email" id="email" autocomplete="off" placeholder="Enter Email" maxlength="255"  value="<%- users.email%>" required="required" class="form-control" disabled="disabled">
+                </div>
+                <div class="form-group">
+                  <label>Phone Number <span style="color:red;">*</span></label>
+                  <div class="row">
+                     <div class="col-lg-2">
+                        <label>Country Code</label>
+                      </div>
+                      <div class="col-lg-4">
+                        <select name="coCode" class="form-control" id="sl_countries"  style="width:200px;">
+                            <%for(i=0;i<codes.length;i++){%>
+                              <option value="<%- codes[i].dial_code %>" <% if(codes[i].dial_code==users.coCode){ %>selected="selected"<% } %>><%- codes[i].name %> (<%- codes[i].dial_code %>)</option>
+                            <% } %>
+                        </select></div>
+                      <div class="col-lg-6">
+                        <input type="text" id="mobileNo" name="mobileNo" autocomplete="off" placeholder="Enter Number"  value="<%- users.mobileNo%>"  minlength=10 required="required" maxlength="10" class="form-control">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Password <span style="color:red;">*</span></label>
+                    <input type="password" id="password" name="password" autocomplete="off" placeholder="Enter Password" maxlength="55" class="form-control">
+                  </div>
+                  <input type="checkbox" id="show-password"> <label for="show-password">Show password</label>
+                  <div class="form-group">
+                    <label>Confirm Password <span style="color:red;">*</span></label>
+                    <input type="password" id="cPassword" name="confirmPassword" autocomplete="off" placeholder="Enter Password" maxlength="55" class="form-control">
+                  </div>
+                  <input type="checkbox" id="show-cpassword"> <label for="show-cpassword">Show password</label>
+                  <div class="form-group">
+                   <label>Address</label>
+                   <textarea name="address" id="address" class="form-control" rows="3"><%- users.address%></textarea>
+                  </div>                                       
+                  <div class="form-group">
+                  <label>Access</label>
+                  <select name="access" multiple class="form-control" size=2 required="required">
+                  <option value="2" <% for(var j=0;j<users.access.length;j++){
+                      if(users.access[j]=="2"){ %>
+                           selected="selected"                                           
+                      <%  }} %>>User</option>
+                  <option value="3" <%  for(var j=0;j<users.access.length;j++){
+                      if(users.access[j]=="3"){ %>
+                          selected="selected"                              <%  }} %>>Merchant</option>                                                  
+                  </select>
+                  </div>
+                  <div class="form-group">
+                  <label>Status</label>
+                  <label class="radio-inline">
+                  <input type="radio" name="status" id="optionsRadiosInline1" value="0" <% if(users.status==0){ %>checked="checked"<% } %>>Active
+                  </label>
+                  <label class="radio-inline">
+                  <input type="radio" name="status" id="optionsRadiosInline2" value="2" <% if(users.status==2){ %>checked="checked"<% } %>>Deactive
+                  </label>
+                  <label class="radio-inline">
+                  <input type="radio" name="status" id="optionsRadiosInline3" value="1" <% if(users.status==1){ %>checked="checked"<% } %>>Blocked
+                  </label>
+                  </div>   
+                  <input type="submit" id="btnValidate" class="btn btn-default" value="Submit">
+                  <input type="reset" class="btn btn-default" value="Reset">
+                  </form>
+                </div>
+              </div>
+
+
+
+
+
+
+
+        
+
+        </div>
+        <!--/.col (left) -->
+        
+        </div>
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+ <% include ../include/footer %>
+    
+    <script src="/admin/lib/chosen/chosen.jquery.min.js"></script>
+    <script src="/admin/lib/showPassword/vendor/modernizr.custom.js"></script>
+    <script src="/admin/lib/showPassword/hideShowPassword.min.js"></script>
+    <script src="/admin/vendors/user/js/create_edit.js"></script>
+    <script>
+    $('#show-password').change(function(){
+        $('#password').hideShowPassword($(this).prop('checked'));
+    });
+    $('#show-cpassword').change(function(){
+        $('#cPassword').hideShowPassword($(this).prop('checked'));
+    });
+    </script>
+    </body>
+
+</html>
+ 
